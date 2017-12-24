@@ -1,29 +1,39 @@
-package javacore5;
+package javacore5_2;
 
 import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
 		Main main=new Main();
-		Employee nv1=main.enterEmployeeInfo();
-		main.analyzeDepartment(nv1);
-		main.showInfo(nv1);
-		
-		Employee nv2=main.enterEmployeeInfo();
-		main.analyzeDepartment(nv2);
-		main.showInfo(nv2);
-		
-		Employee nv3=main.enterEmployeeInfo();
-		main.analyzeDepartment(nv3);
-		main.showInfo(nv3);
-		
-		Employee nv4=main.enterEmployeeInfo();
-		main.analyzeDepartment(nv4);
-		main.showInfo(nv4);
-		
-		Employee nv5=main.enterEmployeeInfo();
-		main.analyzeDepartment(nv5);
-		main.showInfo(nv5);
+		int i=0;
+		Employee[] employeeArray =new Employee[200];
+		while(true){
+			System.out.println("1. Create new Employee");
+			System.out.println("2. Show existing Employee");
+			System.out.println("3. Exit");
+			Scanner scan1= new Scanner(System.in);
+			int chooice= scan1.nextInt();
+			switch(chooice){
+				case 1:
+					Employee em=main.enterEmployeeInfo();
+					while(em==null){
+						em=main.enterEmployeeInfo();
+					}
+					employeeArray[i]= em;
+					i++;
+					break;
+				case 2:
+					for(Employee em2 : employeeArray){
+						if(em2!=null){
+							main.showInfo(em2);
+						}
+					}
+					break;
+				case 3:
+					break;
+					 
+			}
+		}
 	}
 	private void showInfo(Employee nv){
 		System.out.println("*************************************");
@@ -52,32 +62,47 @@ public class Main {
 	}
 	private Employee enterEmployeeInfo(){
 		
-		Employee nv=new Employee();
 		Scanner scan1= new Scanner(System.in);
 		//For name
 		System.out.println("Name Employee: ");
 		String name= scan1.nextLine();	
-		nv.setName(name);
+		
 		
 		Scanner scan2= new Scanner(System.in);
 		//For age
 		System.out.println("Age Employee: ");
-		int age= scan2.nextInt();	
-		nv.setAge(age);
+		String age= scan2.nextLine();	
+	
 		
 		Scanner scan3= new Scanner(System.in);
 		//For job
 		System.out.println("Job Employee: ");
-		String developer= scan3.nextLine();	
-		nv.setJob(developer);
+		String job= scan3.nextLine();	
+		
 		
 		Scanner scan4= new Scanner(System.in);
 		//For salary
 		System.out.println("Salary Employee: ");
 		double sal= scan4.nextDouble();	
-		nv.setSalary(sal);
 		
-		
-		return nv;
+		if(!validateNumber(age)){
+			return null;
+		}else{
+			Employee em=new Employee();
+			em.setAge(Integer.parseInt(age));
+			em.setName(name);
+			em.setJob(job);
+			em.setSalary(sal);
+			return em;
+		}
+	}
+	
+	private boolean validateNumber(String str){
+		try{
+			Integer.parseInt(str);
+			return true;
+		}catch(Exception e){
+			return false;
+		}
 	}
 }
